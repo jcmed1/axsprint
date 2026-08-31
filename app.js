@@ -598,8 +598,10 @@ function portalCompactAllList(w){
     const category=portalListCategory(a,w);
     const label=portalListCategoryLabel(category);
     return `<button type="button" class="portal-compact-item ${category}" data-portal-item="${a.id}" data-portal-category="${category}" title="${esc(a.name)}">
-      <span class="compact-status-tag ${category}">${label}</span>
-      ${actionCode(a)?`<span class="action-code-tag small">${esc(actionCode(a))}</span>`:''}
+      <div class="compact-item-meta">
+        <span class="compact-status-tag ${category}">${label}</span>
+        ${actionCode(a)?`<span class="action-code-tag small">${esc(actionCode(a))}</span>`:''}
+      </div>
       <strong>${esc(a.name)}</strong>
       <span class="compact-date">${a.end?fmtDate(a.end):a.start?`${fmtDate(a.start)} 시작`:'기한 미정'}</span>
     </button>`;
@@ -1113,6 +1115,40 @@ async function submitLogin(){
 function enterAdmin(){if(currentProfile?.role!=='admin')return;sessionStorage.setItem('ax-admin-mode-v22','1');isAdmin=true;currentView='dashboard';render();window.scrollTo({top:0,behavior:'smooth'});}
 function exitAdmin(){sessionStorage.removeItem('ax-admin-mode-v22');isAdmin=false;currentView='portal';render();window.scrollTo({top:0,behavior:'smooth'});}
 
+
+function openChangelog(){
+  const items=[
+    ['v24.3','2026-09-01','하단 전체 항목을 반응형 카드형으로 정리하고 고유번호 태그 폭을 내용 기준으로 조정. 사례비 체크 표시를 적색으로 구분.'],
+    ['v24.2','2026-09-01','실증기관별 사례비 지급 여부 체크 기능 추가. 사례비는 실증 진척률 계산에서 제외.'],
+    ['v24.1','2026-09-01','신규 설치 전용 패키지로 통합하고 Supabase 신규 프로젝트 연결값, 설치·운영 매뉴얼 정비.'],
+    ['v23','2026-08-31','실증관리 통합: 실증기관·책임기관·목표인원, 4단계 완료인원, 단계별 25% 진척도, 실증 관리 권한 적용.'],
+    ['v22','2026-08-31','최초 관리자 생성, 비밀번호 변경·초기화 요청, 사용자 계정 복구 흐름 추가.'],
+    ['v21','2026-08-31','Supabase Auth·RLS 기반 보안 구조, 기관별 계정·권한, 답변 후 원문 잠금, 진행항목 고유번호 및 변경이력 도입.'],
+    ['v20','2026-08-31','요청·회신 관리 강화: 전체/받은/보낸 요청, 복수 수신기관, 관리자 수정·삭제, 기관별 회신 관리.'],
+    ['v19','2026-08-31','기관이 직접 요청을 생성하고 회신·협의사항을 주고받는 협업 소통 기능 추가.'],
+    ['v18','2026-08-31','Supabase 공유DB 연동, 기준일정/현재일정 분리, 세부항목 추가·복제·비활성화 등 운영 편집 기능 추가.'],
+    ['v17','2026-08-31','관리자 대시보드의 글자·박스·컬럼 비율을 재조정하고 반응형 레이아웃 개선.'],
+    ['v16','2026-08-31','관리자 모드 전반의 글자 크기와 줄간격을 확대해 가독성 개선.'],
+    ['v15','2026-08-31','기관 표기를 경복대학교로 통일하고 기존 저장 데이터도 자동 변환.'],
+    ['v14','2026-08-31','관리자 화면의 색상과 카드 밀도를 낮춰 시각 피로도 개선.'],
+    ['v13','2026-08-31','전체 항목을 필터 가능한 얇은 목록으로 변경하고 상태 태그·상세 이동 기능 추가.'],
+    ['v12','2026-08-31','기한경과·마감임박·회신필요를 단일 버튼형으로 정리하고 전체 항목 목록을 간결화.'],
+    ['v11','2026-08-31','주요 진행사항에 D-day와 단계 진행선 시각화를 적용.'],
+    ['v10','2026-08-31','상태 요약 수치를 클릭 가능한 링크로 전환하고 기관 선택 박스·초기 시각화 추가.'],
+    ['v9','2026-08-31','기관 화면을 현재 주요 진행사항→협업 요청→전체 진행항목→상세 현황 구조로 정리.'],
+    ['v8','2026-08-31','기관별 상황판 중심으로 단순화하고 색상·여백·모바일 반응형을 조정.'],
+    ['v7','2026-08-31','기관용과 관리자용 화면을 분리하고 기관별 직접 링크 및 관리자 진입 구조 도입.'],
+    ['v6','2026-08-31','완료기준 장식을 정리하고 성과목표의 정량지표를 완료기준에 반영.'],
+    ['v5','2026-08-31','요청사항·기관 회신 및 소통 메모 기능 추가.'],
+    ['v4','2026-08-31','기관 선택을 상단 탭으로 변경하고 사무적 문체·큰 글씨·완료기준 구체화.'],
+    ['v3','2026-08-31','가독성 확대와 모바일 반응형 개선.'],
+    ['v2','2026-08-31','기관이 현재 해야 할 일과 기한을 우선 확인하는 기관 업무판 중심 구조 도입.'],
+    ['v1','2026-08-31','성과목표·기관·실행항목·요청·일정·문서를 통합한 최초 Control Tower MVP 구성.']
+  ];
+  const body=`<p class="changelog-note">주요 기능 변경 이력입니다. 세부 운영 데이터 변경 내용은 시스템 변경이력(Audit Log)에서 별도로 관리합니다.</p><div class="changelog-list">${items.map(([v,d,t])=>`<div class="changelog-item"><div class="changelog-head"><span class="changelog-version">${v}</span><span class="changelog-date">${d}</span></div><p>${t}</p></div>`).join('')}</div>`;
+  openDrawer('JUNCTIONMED','버전 변경 이력',body);
+}
+
 function exportJson(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='AX_Sprint_Control_Tower_backup.json';a.click();URL.revokeObjectURL(a.href);}
 document.getElementById('importInput').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{try{state=normalizeFlexibleActions(renameLegacyInstitution(JSON.parse(reader.result)));saveState();render();toast('백업 데이터를 불러왔습니다.');}catch(err){alert('올바른 JSON 백업 파일이 아닙니다.');}};reader.readAsText(f);e.target.value='';});
 document.getElementById('drawerClose').onclick=closeDrawer;
@@ -1125,6 +1161,7 @@ document.getElementById('logoutBtn').onclick=()=>signOut();
 document.getElementById('loginSubmit').onclick=submitLogin;
 document.getElementById('forgotPasswordBtn').onclick=openForgotPassword;
 document.getElementById('bootstrapAdminBtn').onclick=openBootstrapAdmin;
+document.getElementById('changelogBtn').onclick=openChangelog;
 ['loginId','loginPassword'].forEach(id=>document.getElementById(id)?.addEventListener('keydown',e=>{if(e.key==='Enter')submitLogin();}));
 render();
 initSupabaseSync();

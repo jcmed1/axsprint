@@ -1616,3 +1616,84 @@ body{background:var(--bg);color:var(--ink)}
 .vf-stipend-check input{width:22px;height:22px;accent-color:#c62828;cursor:pointer}
 .vf-stipend-check small{font-size:13px;color:#7b8490;text-align:right}
 @media(max-width:860px){.vf-compact-row{grid-template-columns:1fr 72px 58px}.vf-mini-viz{grid-column:1/-1;grid-row:2}.vf-stipend-status{grid-column:3;grid-row:1}.vf-stipend-check{align-items:flex-start;flex-direction:column}.vf-stipend-check small{text-align:left}}
+
+/* v25 — compact card grid for the institution situation list */
+.portal-list-section .portal-compact-list{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:9px;
+}
+.portal-list-section .portal-compact-item{
+  width:100%;
+  min-width:0;
+  min-height:104px;
+  padding:12px 13px 11px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  grid-template-rows:auto 1fr auto;
+  grid-template-areas:
+    "meta meta"
+    "title title"
+    "date date";
+  gap:8px;
+  align-content:start;
+  border:1px solid #e2e7ea;
+  border-radius:8px;
+  background:#fff;
+}
+.portal-list-section .portal-compact-item:hover{
+  border-color:#c7d0d6;
+  background:#fafbfc;
+}
+.portal-list-section .compact-item-meta{
+  grid-area:meta;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  min-width:0;
+  flex-wrap:wrap;
+}
+.portal-list-section .compact-status-tag{
+  min-width:0;
+  width:auto;
+  flex:0 0 auto;
+  padding:0 8px;
+}
+.portal-list-section .action-code-tag.small{
+  display:inline-flex;
+  width:max-content;
+  max-width:100%;
+  flex:0 0 auto;
+  padding:3px 7px;
+}
+.portal-list-section .portal-compact-item strong{
+  grid-area:title;
+  font-size:14px;
+  line-height:1.42;
+  font-weight:750;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.portal-list-section .compact-date{
+  grid-area:date;
+  justify-self:start;
+  font-size:11px;
+  color:#8a949c;
+}
+@media(max-width:1080px){
+  .portal-list-section .portal-compact-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:680px){
+  .portal-list-section .portal-compact-list{grid-template-columns:1fr;gap:7px}
+  .portal-list-section .portal-compact-item{min-height:92px;padding:11px 12px 10px;gap:7px}
+  .portal-list-section .portal-compact-item strong{font-size:14px;-webkit-line-clamp:2}
+}
+
+
+/* JunctionMED footer / changelog */
+.app-footer{margin-top:30px;padding:18px 4px calc(18px + env(safe-area-inset-bottom));border-top:1px solid #e5e9ee;display:flex;align-items:center;justify-content:space-between;gap:14px;color:#7a8492;font-size:12px;line-height:1.5}.footer-copy{min-width:0}.footer-changelog{appearance:none;border:0;background:transparent;padding:4px 0;color:#4f6174;font:inherit;font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}.footer-changelog:hover{color:#1f3d5a}.changelog-list{display:flex;flex-direction:column;gap:0}.changelog-item{padding:14px 0;border-bottom:1px solid #edf0f3}.changelog-item:first-child{padding-top:2px}.changelog-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:5px}.changelog-version{font-size:15px;font-weight:850;color:#23384d}.changelog-date{font-size:11px;color:#98a2ad;white-space:nowrap}.changelog-item p{margin:0;color:#5e6b78;font-size:13px;line-height:1.6}.changelog-note{margin:0 0 14px;padding:10px 12px;background:#f7f9fb;border-radius:7px;color:#687583;font-size:12px;line-height:1.55}@media(max-width:720px){.app-footer{margin-top:22px;padding:16px 2px calc(74px + env(safe-area-inset-bottom));align-items:flex-start;flex-direction:column;gap:6px}.footer-changelog{font-size:12px}}
