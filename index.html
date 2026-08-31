@@ -1,1 +1,85 @@
-Hello
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111827" />
+  <title>AX Sprint 사업관리</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">AX</div>
+        <div><strong>Control Tower</strong><span>사업 실행관리</span></div>
+      </div>
+      <nav id="nav"></nav>
+      <div class="sidebar-footer">
+        <div class="role-pill">주관기관</div>
+        <strong>정션메드 PM</strong>
+        <small>마스터 데이터 중앙관리</small>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">2026 복지분야 AI 응용제품 신속 상용화 지원사업</div>
+          <h1 id="pageTitle">기관 진행현황</h1>
+        </div>
+        <div class="top-actions">
+          <span class="sync-badge" id="syncStatus">공유DB 확인 중</span>
+          <span class="user-badge" id="userBadge" hidden></span>
+          <span class="asof" id="asOf"></span>
+          <button class="btn secondary" id="quickAddBtn">+ 진행항목</button>
+          <button class="btn primary" id="pmUpdateBtn">요청·회신 관리</button>
+          <button class="btn admin-access" id="adminAccessBtn" hidden>관리자</button>
+          <button class="btn secondary" id="accountBtn" hidden>내 계정</button>
+          <a class="btn secondary manual-link" href="user_manual.html" target="_blank" rel="noopener">이용 안내</a>
+          <button class="btn secondary" id="logoutBtn" hidden>로그아웃</button>
+        </div>
+      </header>
+
+      <section id="content" class="content"></section>
+    </main>
+  </div>
+
+  <nav id="mobileNav" class="mobile-nav" aria-label="모바일 메뉴"></nav>
+
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="drawer" id="drawer">
+    <div class="drawer-head">
+      <div><div class="eyebrow" id="drawerEyebrow"></div><h2 id="drawerTitle"></h2></div>
+      <button class="icon-btn" id="drawerClose">×</button>
+    </div>
+    <div id="drawerBody" class="drawer-body"></div>
+  </aside>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="login-backdrop" id="loginBackdrop" aria-hidden="true">
+    <div class="login-card account-login-card" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+      <div class="login-title-row">
+        <div><span>AX Sprint</span><h2 id="loginTitle">사업관리 시스템 로그인</h2></div>
+      </div>
+      <p>기관에서 부여받은 로그인 ID와 비밀번호를 입력해 주십시오.</p>
+      <label class="login-field"><span>로그인 ID</span><input type="text" autocomplete="username" class="input login-input" id="loginId" placeholder="로그인 ID" /></label>
+      <label class="login-field"><span>비밀번호</span><input type="password" autocomplete="current-password" class="input login-input" id="loginPassword" placeholder="비밀번호" /></label>
+      <div class="login-error" id="loginError"></div>
+      <button type="button" class="btn primary login-submit" id="loginSubmit">로그인</button>
+      <div class="login-support-actions">
+        <button type="button" class="login-link-btn" id="forgotPasswordBtn">비밀번호 초기화 요청</button>
+        <button type="button" class="login-link-btn" id="bootstrapAdminBtn">최초 관리자 설정</button>
+      </div>
+      <div class="login-support-note" id="loginSupportNote">최초 설치 시 관리자 계정을 먼저 생성할 수 있습니다.</div>
+    </div>
+  </div>
+
+  <input type="file" id="importInput" accept="application/json" hidden />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
