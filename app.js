@@ -547,6 +547,7 @@ function portalRequestSection(w,name){
 function portalCommunicationPanel(w,name){
   const latestReceived=w.requests.slice(0,1), latestSent=w.sentRequests.slice(0,1), latestMemo=w.memos.slice(0,1);
   const rows=[
+    ['v24.4','2026-09-01','이용 안내를 관리자용·기관 사용자용 상세 매뉴얼로 분리하고 설치·계정·권한·진행항목·요청회신·실증·비밀번호·백업 절차를 단계별로 확장.'],
     ...latestReceived.map(r=>({type:'받은 요청',title:r.title,meta:`${r.from||'요청기관'} · ${r.due?fmtDate(r.due)+'까지':'기한 미정'}`,action:'requests'})),
     ...latestSent.map(r=>({type:'보낸 요청',title:r.title,meta:`${requestRecipientLabel(r)} · ${requestReplyCount(r)}/${requestRecipients(r).length} 회신`,action:'requests'})),
     ...latestMemo.map(m=>({type:'협의',title:m.title,meta:`대화 ${(m.messages||[]).length}건`,action:'memos'}))
